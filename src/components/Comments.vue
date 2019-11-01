@@ -13,15 +13,22 @@
                </li>
             </ul>
         </template>
+        <reply-form class="comments__reply-form" v-model="reply"></reply-form>
     </div>
 </template>
 
 <script>
     import Comment from './Comment.vue'
+    import ReplyForm from './ReplyForm.vue'
     export default {
-        components: { Comment },
+        components: { Comment, ReplyForm },
         props: {
             comments: {type: Array, default: () => ({}) }
+        },
+        data () {
+            return {
+                reply: null
+            }
         },
         computed: {
             hasComments () {
@@ -55,5 +62,8 @@
         &.is-reply {
             padding-left: 50px;
         }
+    }
+    .comments__reply-form {
+        margin-top: 20px;
     }
 </style>

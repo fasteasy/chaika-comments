@@ -65,7 +65,7 @@
         display: flex;
         margin-top: 10px;
         & > * {
-            margin-left: 0.5em;
+            margin-left: 2em;
             &:first-child {
                 margin-left: 0;
             }

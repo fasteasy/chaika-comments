@@ -31,7 +31,7 @@
         position: relative;
         padding: 0;
         margin: 0;
-        display: block;
+        display: inline-flex;
         &--sm {
             font-size: 50px;
         }
