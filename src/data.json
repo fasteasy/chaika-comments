@@ -1,0 +1,53 @@
+{
+  "comments": [
+    {
+      "isUser": true,
+      "id": "123",
+      "username": "Patient",
+      "avatar": "",
+      "text": "Hi!",
+      "updated": "",
+      "created": ""
+    },
+    {
+      "isUser": false,
+      "id": "124",
+      "user": "Doctor",
+      "avatar": "",
+      "text": "Hello!",
+      "updated": "",
+      "created": "",
+      "replyTo": ""
+    },
+    {
+      "isUser": false,
+      "id": "125",
+      "user": "Doctor",
+      "avatar": "",
+      "text": "How r u?",
+      "updated": "",
+      "created": "",
+      "replyTo": ""
+    },
+    {
+      "isUser": true,
+      "id": "126",
+      "user": "Patient",
+      "avatar": "",
+      "text": "Fine! Thx",
+      "updated": "",
+      "created": "",
+      "replyTo": ""
+    },
+    {
+      "isUser": true,
+      "id": "127",
+      "user": "Patient",
+      "avatar": "",
+      "text": "And u?",
+      "updated": "",
+      "created": "",
+      "replyTo": ""
+    }
+  ]
+}

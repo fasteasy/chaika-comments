@@ -1,28 +1,45 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <div class="container">
+            <comments :comments="comments"></comments>
+        </div>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+    import Comments from './components/Comments.vue'
+    import Data from './data.json'
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+    console.log(Data)
+
+    export default {
+        name: 'app',
+        components: { Comments },
+        data () {
+            return {
+                comments: null
+            }
+        },
+        created () {
+            setTimeout(() => {
+                this.comments = Data.comments
+            }, 1000)
+        },
+        mounted() {
+            console.log('comments')
+        }
+    }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    body {
+        font-family: 'Gotham Pro', sans-serif;
+        background: #FAFBFC;
+        font-weight: 300;
+    }
+    .container {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 </style>
