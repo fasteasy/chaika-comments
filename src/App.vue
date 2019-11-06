@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="container">
-            <comments :comments="comments"></comments>
+            <comments :items="comments" @push="push"></comments>
         </div>
     </div>
 </template>
@@ -9,24 +9,47 @@
 <script>
     import Comments from './components/Comments.vue'
     import Data from './data.json'
+    import CommentModel from './models/Comment'
+    import Vue from 'vue'
+    import Comment from './components/Comment.vue'
+    import CommentsList from './components/CommentsList.vue'
 
-    console.log(Data)
+    Vue.component('comment', Comment)
+    Vue.component('comments-list', CommentsList)
 
     export default {
         name: 'app',
         components: { Comments },
         data () {
             return {
-                comments: null
+                items: null
             }
         },
         created () {
             setTimeout(() => {
-                this.comments = Data.comments
+                this.items = Data.comments.map(item => new CommentModel(item))
             }, 1000)
         },
-        mounted() {
-            console.log('comments')
+        computed: {
+            comments () {
+                if (!this.items) return []
+                return this.items.length ? this.makeHierarchy(this.items) : []
+            }
+        },
+        methods: {
+            makeHierarchy (items) {
+                function makeComment (item) {
+                    const Comment = new CommentModel(item)
+                    Comment.comments = items.filter(i => i.parent === item.id).map(makeComment)
+                    return Comment
+                }
+
+                const comments = items.map(makeComment).filter(comment => !comment.parent)
+                return comments
+            },
+            push (comment) {
+                this.items = this.items.concat([comment])
+            }
         }
     }
 </script>

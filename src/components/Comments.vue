@@ -1,43 +1,55 @@
 <template>
     <div class="comments">
-        <template v-if="!hasComments">
-            No comments
-        </template>
-        <template v-else>
-            <ul class="comments-list">
-               <li class="comments-list__item"
-                   v-for="comment in comments"
-                   :class="{ 'is-reply': isReply(comment) }"
-                   :key="comment.id">
-                   <comment :comment="comment"></comment>
-               </li>
-            </ul>
-        </template>
+        <template v-if="!hasComments">No comments</template>
+        <comments-list :comments="items" v-else></comments-list>
         <reply-form class="comments__reply-form" v-model="reply"></reply-form>
     </div>
 </template>
 
 <script>
-    import Comment from './Comment.vue'
+    import Bus from '../bus'
+    import CommentService from '../services/comments'
+    import CommentModel from '../models/Comment'
     import ReplyForm from './ReplyForm.vue'
     export default {
-        components: { Comment, ReplyForm },
+        components: { ReplyForm },
         props: {
-            comments: {type: Array, default: () => ({}) }
+            items: { type: Array, default: () => ([]) }
         },
         data () {
             return {
-                reply: null
+                reply: new CommentModel()
             }
         },
         computed: {
             hasComments () {
                 return this.comments && this.comments.length
+            },
+            comments () {
+                return this.items
             }
         },
+        mounted () {
+            const app = this
+            Bus.$on('submit', (comment) => {
+                CommentService.send(comment).then(() => {
+                    comment.id = String(Math.ceil(Math.random() * 100))
+                    app.$emit('push', comment)
+                })
+            })
+        },
         methods: {
+            parents () {
+                return this.comments.filter(comment => !comment.parent)
+            },
+            children (id) {
+                const children = this.comments.filter(comment => {
+                    return comment.parent === id
+                })
+                return children
+            },
             isReply (comment) {
-                return !comment.isUser
+                return !!comment.parent
             }
         }
     }

@@ -8,7 +8,6 @@
         <div class="comment__main">
             <div class="comment__text">
                 {{ comment.text }}
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur facere impedit iste non odit praesentium quod repellat rerum sapiente voluptatem? Culpa eos hic modi nostrum quam quidem veritatis vero, voluptatem?
             </div>
             <div class="comment__footer">
                 <div class="comment__date"></div>
@@ -30,18 +29,34 @@
                         </svg>
                         <span>Delete</span>
                     </button>
+                    <button type="button" @click="showReply = true" class="comment__action">
+                        <span>Reply</span>
+                    </button>
                 </div>
             </div>
         </div>
+        <div class="comment__reply" v-show="showReply">
+            <reply-form v-model="reply" @submit="showReply = false"></reply-form>
+        </div>
+        <comments-list class="comment__replies" v-if="comment.comments.length" :comments="comment.comments"></comments-list>
     </div>
 </template>
 
 <script>
+    import CommentsList from './CommentsList.vue'
+    import ReplyForm from './ReplyForm.vue'
     import Avatar from './Avatar.vue'
+    import CommentModel from '../models/Comment'
     export default {
-        components: { Avatar },
+        components: { Avatar, ReplyForm, CommentsList },
         props: {
             comment: { type: Object, default: () => ({}) }
+        },
+        data () {
+            return {
+                reply: new CommentModel({ username: 'Hey Man', parent: this.comment.id }),
+                showReply: false
+            }
         }
     }
 </script>
@@ -49,9 +64,13 @@
 <style lang="scss">
     .comment {
         display: flex;
+        flex-wrap: wrap;
     }
     .comment__aside {
         margin-right: 20px;
+    }
+    .comment__main {
+        flex: 1 1 auto;
     }
     .comment__text {
         border: 1px solid #DFE4E7;
@@ -101,5 +120,13 @@
         width: 1em;
         height: 1em;
         font-size: 20px;
+    }
+    .comment__reply {
+        flex: 0 0 100%;
+        margin-top: 20px;
+    }
+    .comment__replies {
+        margin-top: 20px;
+        flex: 0 0 100%
     }
 </style>

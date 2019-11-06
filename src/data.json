@@ -1,7 +1,7 @@
 {
   "comments": [
     {
-      "isUser": true,
+      "user": "111",
       "id": "123",
       "username": "Patient",
       "avatar": "",
@@ -10,44 +10,53 @@
       "created": ""
     },
     {
-      "isUser": false,
+      "user": "222",
+      "parent": "123",
       "id": "124",
-      "user": "Doctor",
+      "username": "Doctor",
       "avatar": "",
       "text": "Hello!",
       "updated": "",
-      "created": "",
-      "replyTo": ""
+      "created": ""
     },
     {
-      "isUser": false,
+      "user": "222",
+      "parent": "123",
       "id": "125",
-      "user": "Doctor",
+      "username": "Doctor",
       "avatar": "",
       "text": "How r u?",
       "updated": "",
-      "created": "",
-      "replyTo": ""
+      "created": ""
     },
     {
-      "isUser": true,
+      "user": "111",
+      "parent": "123",
       "id": "126",
-      "user": "Patient",
+      "username": "Patient",
       "avatar": "",
       "text": "Fine! Thx",
       "updated": "",
-      "created": "",
-      "replyTo": ""
+      "created": ""
     },
     {
-      "isUser": true,
+      "user": "111",
+      "parent": "123",
       "id": "127",
-      "user": "Patient",
+      "username": "Patient",
       "avatar": "",
       "text": "And u?",
       "updated": "",
-      "created": "",
-      "replyTo": ""
+      "created": ""
+    },
+    {
+      "user": "111",
+      "id": "128",
+      "username": "Patient",
+      "avatar": "",
+      "text": "One more comment",
+      "updated": "",
+      "created": ""
     }
   ]
 }
