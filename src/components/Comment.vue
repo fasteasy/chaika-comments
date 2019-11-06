@@ -29,7 +29,7 @@
                                 </svg>
                                 <span>Edit</span>
                             </button>
-                            <button type="button" @click="remove" class="comment__action">
+                            <button type="button" @click="removed = true" v-if="!removed"  class="comment__action">
                                 <svg class="comment__action-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g opacity="0.56">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6574 7.82754L11.5662 7.78664L11.3292 14.2747L12.4211 14.3148L12.6574 7.82754ZM9.4535 14.2955H10.5462V7.80671H9.4535V14.2955ZM8.67049 14.2747L8.43344 7.78664L7.34155 7.82679L7.5786 14.3148L8.67049 14.2747Z" fill="currentColor"/>
@@ -38,6 +38,16 @@
                                 </svg>
                                 <span>Delete</span>
                             </button>
+
+                            <template v-if="removed">
+                                <button type="button" @click="remove" class="comment__action">
+                                    <span>Yes</span>
+                                </button>
+                                <button type="button" @click="removed = false" class="comment__action">
+                                    <span>No</span>
+                                </button>
+                            </template>
+
                         </template>
                         <button type="button" @click="createReply" class="comment__action">
                             <span>Reply</span>
@@ -69,7 +79,8 @@
             return {
                 editable: null,
                 reply: null,
-                showReply: false
+                showReply: false,
+                removed: false
             }
         },
         computed: {
