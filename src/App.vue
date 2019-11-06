@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="container">
-            <comments :items="comments" @push="push"></comments>
+            <comments :items="comments" @update="update" @push="push"></comments>
         </div>
     </div>
 </template>
@@ -52,6 +52,11 @@
             },
             push (comment) {
                 this.items = this.items.concat([comment])
+            },
+            update ({ comment, edited }) {
+                const old = this.items.findIndex(item => item.id === comment.id)
+                this.items[old] = new CommentModel(edited)
+                this.items = this.items.slice()
             }
         }
     }

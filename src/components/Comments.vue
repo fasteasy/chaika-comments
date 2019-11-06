@@ -2,7 +2,7 @@
     <div class="comments">
         <template v-if="!hasComments">No comments</template>
         <comments-list :comments="items" v-else></comments-list>
-        <reply-form class="comments__reply-form" v-model="reply"></reply-form>
+        <reply-form class="comments__reply-form" v-model="reply" @submit="postComment"></reply-form>
     </div>
 </template>
 
@@ -37,6 +37,9 @@
                     app.$emit('push', comment)
                 })
             })
+            Bus.$on('update', (data) => {
+                app.$emit('update', data)
+            })
         },
         methods: {
             parents () {
@@ -50,6 +53,9 @@
             },
             isReply (comment) {
                 return !!comment.parent
+            },
+            postComment (comment) {
+                Bus.$emit('submit', comment)
             }
         }
     }

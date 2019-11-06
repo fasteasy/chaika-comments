@@ -1,6 +1,6 @@
 <template>
     <form class="reply-form" @submit.prevent="submit">
-        <div class="reply-form__aside">
+        <div class="reply-form__aside" v-if="showAvatar">
             <avatar class="reply-form__avatar" :image="comment.avatar" :username="comment.username"></avatar>
         </div>
         <div class="reply-form__main">
@@ -8,6 +8,7 @@
             <button type="submit" class="reply-form__submit" :disabled="!isValid">
                 Комментировать
             </button>
+            <button type="button" @click="$emit('cancel')">&times;</button>
         </div>
     </form>
 </template>
@@ -19,6 +20,7 @@
     export default {
         components: { Avatar },
         props: {
+            showAvatar: { type: Boolean, default: true },
             value: { default: () => ({}), type: Object }
         },
         data () {
@@ -49,8 +51,7 @@
         methods: {
             submit () {
                 const { parent, text } = this.comment
-                Bus.$emit('submit', { parent, text })
-                this.$emit('submit')
+                this.$emit('submit', { parent, text })
             }
         }
     }
