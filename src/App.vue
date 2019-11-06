@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="container">
-            <comments :items="comments" @update="update" @push="push"></comments>
+            <comments :items="comments" @update="update" @push="push" @remove="remove"></comments>
         </div>
     </div>
 </template>
@@ -57,6 +57,11 @@
                 const old = this.items.findIndex(item => item.id === comment.id)
                 this.items[old] = new CommentModel(edited)
                 this.items = this.items.slice()
+            },
+            remove (id) {
+                const idx = this.items.findIndex(item => item.id === id)
+                if (idx < 0) return
+                this.items.splice(idx, 1)
             }
         }
     }

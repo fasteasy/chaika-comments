@@ -40,6 +40,9 @@
             Bus.$on('update', (data) => {
                 app.$emit('update', data)
             })
+            Bus.$on('remove', comment => {
+                app.$emit('remove', comment.id)
+            })
         },
         methods: {
             parents () {
