@@ -9,7 +9,8 @@ export default class Comment {
             text: null,
             created: null,
             updated: null,
-            comments: null
+            comments: null,
+            isUser: null
         }
     }
 

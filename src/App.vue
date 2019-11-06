@@ -22,6 +22,7 @@
         components: { Comments },
         data () {
             return {
+                userId: '111',
                 items: null
             }
         },
@@ -38,8 +39,10 @@
         },
         methods: {
             makeHierarchy (items) {
+                const user = this.userId
                 function makeComment (item) {
                     const Comment = new CommentModel(item)
+                    Comment.isUser = item.user === user
                     Comment.comments = items.filter(i => i.parent === item.id).map(makeComment)
                     return Comment
                 }
