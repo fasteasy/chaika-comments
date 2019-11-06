@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="container">
-            <comments :items="comments" @update="update" @push="push" @remove="remove"></comments>
+            <comments :items="comments" @update="update" @add="add" @remove="remove"></comments>
         </div>
     </div>
 </template>
@@ -50,7 +50,9 @@
                 const comments = items.map(makeComment).filter(comment => !comment.parent)
                 return comments
             },
-            push (comment) {
+            add (comment) {
+                comment.created = (new Date).getTime()
+                comment.user = this.userId
                 this.items = this.items.concat([comment])
             },
             update ({ comment, edited }) {

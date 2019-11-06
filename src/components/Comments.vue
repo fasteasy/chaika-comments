@@ -34,7 +34,7 @@
             Bus.$on('submit', (comment) => {
                 CommentService.send(comment).then(() => {
                     comment.id = String(Math.ceil(Math.random() * 100))
-                    app.$emit('push', comment)
+                    app.$emit('add', comment)
                 })
             })
             Bus.$on('update', (data) => {
@@ -59,6 +59,7 @@
             },
             postComment (comment) {
                 Bus.$emit('submit', comment)
+                this.reply = new CommentModel()
             }
         }
     }
