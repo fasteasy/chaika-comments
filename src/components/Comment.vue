@@ -87,6 +87,9 @@
             date () {
                 const date = this.comment.updated || this.comment.created
                 return date ? (new Date(date)).getTime() : false
+            },
+            isRootComment () {
+                return !this.comment.parent
             }
         },
         methods: {
@@ -106,8 +109,11 @@
                 this.update(this.editable)
                 this.cancel()
             },
+            getParentId () {
+                return this.comment.id
+            },
             createReply () {
-                this.reply = new CommentModel({ username: 'Hey Man', parent: this.comment.id })
+                this.reply = new CommentModel({ parent: this.getParentId() })
             },
             sendReply (comment) {
                 this.add(comment)
@@ -115,6 +121,10 @@
             },
             cancelReply () {
                 this.reply = null
+            },
+            getRootComment (c) {
+                if (c.isRootComment) return c.comment.id
+                return this.getRootComment(c.$parent)
             }
         }
     }

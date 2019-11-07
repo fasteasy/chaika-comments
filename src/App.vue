@@ -13,9 +13,10 @@
     import CommentModel from './models/Comment'
     import Vue from 'vue'
     import Comment from './components/Comment.vue'
+    import CommentDialog from './components/CommentDialog.vue'
     import CommentsList from './components/CommentsList.vue'
 
-    Vue.component('comment', Comment)
+    Vue.component('comment', CommentDialog)
     Vue.component('comments-list', CommentsList)
 
     export default {
