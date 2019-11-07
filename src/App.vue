@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="container">
-            <comments :items="comments" @update="edit" @add="add" @remove="remove"></comments>
+            <comments :items="comments" @update="edit" @remove="remove"></comments>
         </div>
     </div>
 </template>
@@ -34,7 +34,6 @@
                 loadComments: 'comments/load',
                 remove: 'comments/remove',
                 edit: 'comments/edit',
-                add: 'comments/add'
             })
         }
     }

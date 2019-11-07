@@ -1,5 +1,6 @@
 import Data from '../../data.json'
 import CommentModel from '../../models/Comment'
+import CommentService from '../../services/comments'
 
 export default {
     namespaced: true,
@@ -8,13 +9,9 @@ export default {
         comments: []
     },
     getters: {
-        // comment (state, id) {
-        //     return state.comment.find(comment => comment.id === id)
-        // },
-
         hierarchy (state) {
             const user = state.userId
-            const items = state.comments
+            const items = state.comments.slice()
 
             function makeComment (item) {
                 const Comment = new CommentModel(item)
@@ -44,20 +41,22 @@ export default {
             })
         },
 
-        add ({ commit }, comment) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(commit('add', comment))
-                }, 500)
-            })
+        add ({ commitstate }, comment) {
+            comment.created = (new Date).getTime()
+            comment.user = state.userId
+            return CommentService
+                .create(comment)
+                .then((id) => {
+                    comment.id = id
+                    commit('add', comment)
+                })
         },
 
-        edit ({ commit }, { comment, edited }) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(commit('edit', { comment, edited }))
-                }, 500)
-            })
+        edit ({ commit }, editable) {
+            editable.updated = (new Date).getTime()
+            return CommentService
+                .update(editable.id, editable)
+                .then(() => commit('edit', editable))
         },
     },
     mutations: {
@@ -72,17 +71,15 @@ export default {
             state.comments = comments.slice()
         },
 
-        edit (state, { comment, edited }) {
+        edit (state, edited) {
             const comments = state.comments
-            const idx = comments.findIndex(item => item.id === comment.id)
+            const idx = comments.findIndex(item => item.id === edited.id)
             comments[idx] = edited
             state.comments = state.comments.slice()
         },
 
         add (state, comment) {
-            comment.created = (new Date).getTime()
-            comment.user = state.userId
-            state.comments = state.comments.slice().concat(comment)
+            state.comments.push(comment)
         }
     }
 }

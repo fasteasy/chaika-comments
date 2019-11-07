@@ -1,9 +1,18 @@
 export default {
-    send () {
+    create (comment) {
+        const id = Math.floor(Math.random()*100000).toString()
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve({ success: true })
+                resolve(id)
             }, 300)
+        })
+    },
+
+    update (id, comment) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve()
+            }, 500)
         })
     }
 }

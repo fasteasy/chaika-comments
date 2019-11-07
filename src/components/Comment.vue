@@ -65,6 +65,7 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex'
     import Bus from '../bus'
     import CommentsList from './CommentsList.vue'
     import ReplyForm from './ReplyForm.vue'
@@ -92,6 +93,10 @@
             }
         },
         methods: {
+            ...mapActions({
+                add: 'comments/add',
+                update: 'comments/edit'
+            }),
             edit () {
                 this.editable = new CommentModel(this.comment)
             },
@@ -103,15 +108,14 @@
             },
             save () {
                 if (this.editable.text === this.comment.text) return
-                this.editable.updated = new Date()
-                Bus.$emit('update', { comment: this.comment, edited: this.editable } )
+                this.update(this.editable)
                 this.cancel()
             },
             createReply () {
                 this.reply = new CommentModel({ username: 'Hey Man', parent: this.comment.id })
             },
             sendReply (comment) {
-                Bus.$emit('submit', comment)
+                this.add(comment)
                 this.cancelReply()
             },
             cancelReply () {
