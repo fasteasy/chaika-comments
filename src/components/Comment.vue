@@ -3,7 +3,7 @@
         <div class="comment__base">
             <div class="comment__aside">
                 <div class="comment__avatar">
-                    <avatar username="Vadim Kochergin"></avatar>
+                    <avatar :username="comment.username" :image="comment.avatar"></avatar>
                 </div>
             </div>
             <div class="comment__main">

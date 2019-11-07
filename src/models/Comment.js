@@ -23,5 +23,6 @@ export default class Comment {
         this.created = options.created
         this.updated = options.updated
         this.comments = [].concat(options.comments)
+        this.avatar = options.avatar
     }
 }

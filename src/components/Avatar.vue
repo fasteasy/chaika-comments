@@ -1,8 +1,8 @@
 <template>
-    <figure class="avatar" :class="classList">
-        <img :src="image" class="avatar__image" v-if="image">
+    <figure class="avatar" :class="classList" :title="username">
+        <img :src="image" class="avatar__image" v-if="image" :alt="username">
         <div class="avatar__image avatar__placeholder" v-else></div>
-        <figcaption :aria-label="username" class="avatar__username" v-if="abbr">{{ abbr }}</figcaption>
+        <figcaption :aria-label="username" class="avatar__username" v-if="abbr && !image">{{ abbr }}</figcaption>
     </figure>
 </template>
 
@@ -47,10 +47,11 @@
         height: 1em;
         display: block;
         font-size: 1em;
+        border-radius: 50%;
+        object-fit: cover;
     }
     .avatar__placeholder {
         background: #5C708E;
-        border-radius: 50%;
     }
     .avatar__username {
         display: block;

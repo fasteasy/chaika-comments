@@ -3,9 +3,9 @@
     {
       "user": "111",
       "id": "123",
-      "username": "Patient",
-      "avatar": "",
-      "text": "Hi!",
+      "username": "Пациент Петрович",
+      "avatar": "https://shawglobalnews.files.wordpress.com/2019/07/the-mask.png?w=720&h=480&crop=1",
+      "text": "Hi doc!",
       "updated": "",
       "created": ""
     },
@@ -13,8 +13,8 @@
       "user": "222",
       "parent": "123",
       "id": "124",
-      "username": "Doctor",
-      "avatar": "",
+      "username": "Доктор Дмитриевич",
+      "avatar": "https://chaika.com/images/avatar/3802105d0c14f67ad1debcc5e45ea06d.jpeg?crop=1806px,1806px,2389px,503px",
       "text": "Hello!",
       "updated": "",
       "created": ""
@@ -23,8 +23,8 @@
       "user": "222",
       "parent": "123",
       "id": "125",
-      "username": "Doctor",
-      "avatar": "",
+      "username": "Доктор Дмитриевич",
+      "avatar": "https://chaika.com/images/avatar/3802105d0c14f67ad1debcc5e45ea06d.jpeg?crop=1806px,1806px,2389px,503px",
       "text": "How r u?",
       "updated": "",
       "created": ""
@@ -33,8 +33,8 @@
       "user": "111",
       "parent": "123",
       "id": "126",
-      "username": "Patient",
-      "avatar": "",
+      "username": "Пациент Петрович",
+      "avatar": "https://shawglobalnews.files.wordpress.com/2019/07/the-mask.png?w=720&h=480&crop=1",
       "text": "Fine! Thx",
       "updated": "",
       "created": "  "
@@ -43,8 +43,8 @@
       "user": "111",
       "parent": "123",
       "id": "127",
-      "username": "Patient",
-      "avatar": "",
+      "username": "Пациент Петрович",
+      "avatar": "https://shawglobalnews.files.wordpress.com/2019/07/the-mask.png?w=720&h=480&crop=1",
       "text": "And u?",
       "updated": "",
       "created": ""
@@ -52,8 +52,8 @@
     {
       "user": "111",
       "id": "128",
-      "username": "Patient",
-      "avatar": "",
+      "username": "Пациент Петрович",
+      "avatar": "https://shawglobalnews.files.wordpress.com/2019/07/the-mask.png?w=720&h=480&crop=1",
       "text": "One more comment",
       "updated": "",
       "created": ""
