@@ -1,14 +1,15 @@
 <template>
     <div id="app">
         <div class="container">
-            <comments :items="comments" @update="update" @add="add" @remove="remove"></comments>
+            <comments :items="comments" @update="edit" @add="add" @remove="remove"></comments>
         </div>
     </div>
 </template>
 
 <script>
+    import { mapGetters, mapActions, mapMutations } from 'vuex'
     import Comments from './components/Comments.vue'
-    import Data from './data.json'
+//    import Data from './data.json'
     import CommentModel from './models/Comment'
     import Vue from 'vue'
     import Comment from './components/Comment.vue'
@@ -20,51 +21,21 @@
     export default {
         name: 'app',
         components: { Comments },
-        data () {
-            return {
-                userId: '111',
-                items: null
-            }
-        },
         created () {
-            setTimeout(() => {
-                this.items = Data.comments.map(item => new CommentModel(item))
-            }, 1000)
+            this.loadComments()
         },
         computed: {
-            comments () {
-                if (!this.items) return []
-                return this.items.length ? this.makeHierarchy(this.items) : []
-            }
+            ...mapGetters({
+                comments: 'comments/hierarchy'
+            })
         },
         methods: {
-            makeHierarchy (items) {
-                const user = this.userId
-                function makeComment (item) {
-                    const Comment = new CommentModel(item)
-                    Comment.isUser = item.user === user
-                    Comment.comments = items.filter(i => i.parent === item.id).map(makeComment)
-                    return Comment
-                }
-
-                const comments = items.map(makeComment).filter(comment => !comment.parent)
-                return comments
-            },
-            add (comment) {
-                comment.created = (new Date).getTime()
-                comment.user = this.userId
-                this.items = this.items.concat([comment])
-            },
-            update ({ comment, edited }) {
-                const old = this.items.findIndex(item => item.id === comment.id)
-                this.items[old] = new CommentModel(edited)
-                this.items = this.items.slice()
-            },
-            remove (id) {
-                const idx = this.items.findIndex(item => item.id === id)
-                if (idx < 0) return
-                this.items.splice(idx, 1)
-            }
+            ...mapActions({
+                loadComments: 'comments/load',
+                remove: 'comments/remove',
+                edit: 'comments/edit',
+                add: 'comments/add'
+            })
         }
     }
 </script>
