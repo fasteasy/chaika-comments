@@ -4,7 +4,13 @@
             <avatar class="reply-form__avatar" :image="comment.avatar" :username="comment.username"></avatar>
         </div>
         <div class="reply-form__main">
-            <textarea name="reply" rows="1" v-model="text" class="reply-form__textarea" placeholder="Оставьте свой комментарий..."></textarea>
+            <textarea name="reply"
+                      rows="1"
+                      @input="input"
+                      :value="comment.text"
+                      class="reply-form__textarea"
+                      placeholder="Оставьте свой комментарий...">
+            </textarea>
             <button type="submit" class="reply-form__submit" :disabled="!isValid">
                 Комментировать
             </button>
@@ -19,36 +25,20 @@
     import Avatar from './Avatar.vue'
     export default {
         components: { Avatar },
+        model: { prop: 'comment', event: 'input' },
         props: {
             showAvatar: { type: Boolean, default: true },
-            value: { default: () => ({}), type: Object }
-        },
-        data () {
-            return {
-                comment: this.value
-            }
-        },
-        watch: {
-            value (comment) {
-                this.comment = comment
-            }
-        },
-        mounted () {
+            comment: { default: () => ({}), type: Object }
         },
         computed: {
-            text: {
-                get () {
-                    return this.comment.text
-                },
-                set (text) {
-                    this.$emit('input', Object.assign({}, this.comment, { text }))
-                }
-            },
             isValid () {
-                return !!this.text
+                return !!this.comment.text
             }
         },
         methods: {
+            input (e) {
+                this.$emit('input', Object.assign({}, this.comment, { text: e.target.value }))
+            },
             submit () {
                 const { parent, text } = this.comment
                 this.$emit('submit', { parent, text })
