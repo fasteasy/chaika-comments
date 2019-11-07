@@ -14,5 +14,13 @@ export default {
                 resolve()
             }, 500)
         })
+    },
+
+    remove (id) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve()
+            }, 500)
+        })
     }
 }

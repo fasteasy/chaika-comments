@@ -34,14 +34,14 @@ export default {
         },
 
         remove ({ commit }, id) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(commit('remove', id))
-                }, 500)
-            })
+            return CommentService
+                .remove(id)
+                .then(() => {
+                    commit('remove', id)
+                })
         },
 
-        add ({ commitstate }, comment) {
+        add ({ commit, state }, comment) {
             comment.created = (new Date).getTime()
             comment.user = state.userId
             return CommentService

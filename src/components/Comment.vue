@@ -40,7 +40,7 @@
                             </button>
 
                             <template v-if="removed">
-                                <button type="button" @click="remove" class="comment__action">
+                                <button type="button" @click="remove(comment.id)" class="comment__action">
                                     <span>Yes</span>
                                 </button>
                                 <button type="button" @click="removed = false" class="comment__action">
@@ -66,7 +66,6 @@
 
 <script>
     import { mapActions } from 'vuex'
-    import Bus from '../bus'
     import CommentsList from './CommentsList.vue'
     import ReplyForm from './ReplyForm.vue'
     import Avatar from './Avatar.vue'
@@ -88,23 +87,19 @@
             date () {
                 const date = this.comment.updated || this.comment.created
                 return date ? (new Date(date)).getTime() : false
-//                if (!date) return false
-//                return `${date.getDate()}.${date.getMonth()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
             }
         },
         methods: {
             ...mapActions({
                 add: 'comments/add',
-                update: 'comments/edit'
+                update: 'comments/edit',
+                remove: 'comments/remove'
             }),
             edit () {
                 this.editable = new CommentModel(this.comment)
             },
             cancel () {
                 this.editable = null
-            },
-            remove () {
-                Bus.$emit('remove', this.comment)
             },
             save () {
                 if (this.editable.text === this.comment.text) return

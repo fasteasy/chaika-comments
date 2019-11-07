@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import Bus from '../bus'
+    import { mapActions } from 'vuex'
     import CommentService from '../services/comments'
     import CommentModel from '../models/Comment'
     import ReplyForm from './ReplyForm.vue'
@@ -23,43 +23,19 @@
         },
         computed: {
             hasComments () {
-                return this.comments && this.comments.length
-            },
-            comments () {
-                return this.items
+                return this.items && this.items.length
             }
         },
-        mounted () {
-            const app = this
-            Bus.$on('submit', (comment) => {
-                CommentService.send(comment).then(() => {
-                    comment.id = String(Math.ceil(Math.random() * 100))
-                    app.$emit('add', comment)
-                })
-            })
-            Bus.$on('update', (data) => {
-                app.$emit('update', data)
-            })
-            Bus.$on('remove', comment => {
-                app.$emit('remove', comment.id)
-            })
-        },
         methods: {
-            parents () {
-                return this.comments.filter(comment => !comment.parent)
-            },
-            children (id) {
-                const children = this.comments.filter(comment => {
-                    return comment.parent === id
-                })
-                return children
-            },
-            isReply (comment) {
-                return !!comment.parent
+            ...mapActions({
+                add: 'comments/add'
+            }),
+            reset () {
+                this.reply = new CommentModel()
             },
             postComment (comment) {
-                Bus.$emit('submit', comment)
-                this.reply = new CommentModel()
+                this.add(comment)
+                this.reset()
             }
         }
     }
