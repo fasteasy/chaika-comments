@@ -7,10 +7,13 @@
                 </div>
             </div>
             <div class="comment__main">
-                <div class="comment__text" v-if="!editable">
-                    {{ comment.text }}
-                </div>
-                <reply-form v-model="editable" :show-avatar="false" @submit="save" @cancel="cancel" v-else></reply-form>
+                <!--<transition name="fade" :duration="500">-->
+                    <!--<div class="comment__text" key="saved" v-if="!editable">{{ comment.text }}</div>-->
+                    <!--<reply-form v-model="editable" key="editable" :show-avatar="false" @submit="save" @cancel="cancel" v-if="editable"></reply-form>-->
+                <!--</transition>-->
+
+                <div class="comment__text" key="saved" v-if="!editable">{{ comment.text }}</div>
+                <reply-form v-model="editable" key="editable" :show-avatar="false" @submit="save" @cancel="cancel" v-if="editable"></reply-form>
 
                 <div class="comment__footer" v-if="!editable">
                     <div class="comment__actions">
@@ -57,9 +60,11 @@
                 </div>
             </div>
         </div>
-        <div class="comment__reply" v-if="reply">
-            <reply-form v-model="reply" @submit="sendReply" @cancel="cancelReply"></reply-form>
-        </div>
+        <transition name="reply" :duration="500">
+            <div class="comment__reply" v-if="reply">
+                <reply-form v-model="reply" @submit="sendReply" @cancel="cancelReply"></reply-form>
+            </div>
+        </transition>
         <comments-list class="comment__replies" v-if="comment.comments.length" :comments="comment.comments"></comments-list>
     </div>
 </template>
@@ -211,5 +216,47 @@
         flex: 0 0 100px;
         white-space: nowrap;
         overflow: hidden;
+    }
+
+    .reply-enter, .reply-leave-to {
+        opacity: 0
+    }
+
+    .reply-enter-to, .reply-leave {
+        /*transform: translateX(0)*/
+    }
+
+    .reply-enter-to, .reply-leave {
+        opacity: 1;
+    }
+
+    .reply-enter {
+        transform: scale(0.8, 0.8)
+        /*transform: translateX(100%)*/
+    }
+
+    .reply-enter-to {
+        transform: scale(1, 1);
+    }
+
+    .reply-leave, .reply-leave-active, .reply-leave-to {
+        /*position: absolute;*/
+    }
+
+    .reply-leave {
+        transform: scale(1, 1);
+    }
+
+    .reply-leave-to {
+        transform: scale(0.8, 0.8)
+    }
+
+    .reply-enter-active, .reply-leave-active {
+        transition: 0.5s transform, 0.5s opacity;
+    }
+    .reply-enter-active {
+    }
+    .reply-leave-active {
+        transition-duration: 0.2s;
     }
 </style>
